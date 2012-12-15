@@ -94,9 +94,17 @@ package com.ddg.wwt.game.orbs
 							var spell:ISpell = SpellBook.Instance.GetSpell(sequence);
 							if (spell != null && spell != lastSpell)
 							{
-								trace(spell.Name);
-								gameView.SpellBuffer.BufferSpell(spell);
-								lastSpell = spell;
+								if (gameView.ManaPool.Mana >= spell.ManaCost)
+								{
+									trace(spell.Name);
+									gameView.SpellBuffer.BufferSpell(spell);
+									lastSpell = spell;
+									gameView.ManaPool.Mana = gameView.ManaPool.Mana - spell.ManaCost;
+								}
+								else
+								{
+									trace("Not enough mana for: " + spell.Name);
+								}
 							}
 						}
 						return true;

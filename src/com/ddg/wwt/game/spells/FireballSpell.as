@@ -25,7 +25,7 @@ package com.ddg.wwt.game.spells
 		
 		public function get ManaCost():Number 
 		{
-			return 10;
+			return 0.1;
 		}
 		
 		public function get Icon():Texture

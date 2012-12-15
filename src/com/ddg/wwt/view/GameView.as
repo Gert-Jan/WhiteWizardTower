@@ -110,6 +110,11 @@ package com.ddg.wwt.view
 			return bufferPad;
 		}
 		
+		public function get ManaPool():ManaPad
+		{
+			return manaPad;
+		}
+		
 		public function OnTouch(event:TouchEvent):Boolean
 		{
 			drawPad.OnTouch(event);
