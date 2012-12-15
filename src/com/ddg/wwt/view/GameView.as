@@ -2,6 +2,7 @@ package com.ddg.wwt.view
 {
 	import com.ddg.wwt.Assets;
 	import com.ddg.wwt.game.drawing.DrawPad;
+	import com.ddg.wwt.game.mana.ManaPad;
 	import com.ddg.wwt.game.orbs.OrbPad;
 	import com.ddg.wwt.Settings;
 	import flash.events.IMEEvent;
@@ -20,6 +21,7 @@ package com.ddg.wwt.view
 		private var surface:Sprite = new Sprite();
 		private var isActive:Boolean = false;
 		
+		private var manaPad:ManaPad;
 		private var orbPad:OrbPad;
 		private var drawPad:DrawPad;
 		
@@ -37,6 +39,10 @@ package com.ddg.wwt.view
 			var tower:Image = new Image(Assets.Instance.Tower);
 			tower.x = (Settings.Instance.StageWidth - tower.width) / 2;
 			tower.y = (Settings.Instance.StageHeight - tower.height);
+			// mana pad
+			manaPad = new ManaPad();
+			manaPad.Surface.x = Settings.Instance.StageWidth / 2;
+			manaPad.Surface.y = Settings.Instance.StageHeight - tower.height + 160;
 			// orb pad
 			orbPad = new OrbPad(this);
 			orbPad.Surface.x = Settings.Instance.StageWidth / 2 - OrbPad.WIDTH / 2;
@@ -45,6 +51,7 @@ package com.ddg.wwt.view
 			drawPad = new DrawPad();
 			
 			surface.addChild(background);
+			surface.addChild(manaPad.Surface);
 			surface.addChild(tower);
 			surface.addChild(ground);
 			surface.addChild(orbPad.Surface);
@@ -67,6 +74,11 @@ package com.ddg.wwt.view
 				isActive = false;
 				ViewManager.Instance.RootSurface.removeChild(surface);
 			}
+		}
+		
+		public function Update(deltaTime:Number):void
+		{
+			orbPad.Update(deltaTime);
 		}
 		
 		public function get IsActive():Boolean

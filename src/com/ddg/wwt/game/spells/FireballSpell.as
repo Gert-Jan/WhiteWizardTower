@@ -13,6 +13,11 @@ package com.ddg.wwt.game.spells
 			
 		}
 		
+		public function get Name():String
+		{
+			return "Fireball!!!";
+		}
+		
 		public function get ManaCost():Number 
 		{
 			return 10;

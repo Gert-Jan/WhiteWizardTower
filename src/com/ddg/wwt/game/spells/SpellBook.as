@@ -13,8 +13,20 @@ package com.ddg.wwt.game.spells
 		}
 		
 		public function SpellBook() 
+		{}
+		
+		private static const spells:Vector.<ISpell> = Vector.<ISpell> ([
+			new FireballSpell()
+		]);
+		
+		public function GetSpell(query:Vector.<int>):ISpell
 		{
-			
+			for each (var spell:ISpell in spells)
+			{
+				if (spell.Match(query))
+					return spell;
+			}
+			return null;
 		}
 		
 		public static function ExactSequentialMatch(query:Vector.<int>, spell:Vector.<int>):Boolean
@@ -32,6 +44,7 @@ package com.ddg.wwt.game.spells
 				if (i >= spell.length - 1)
 					return true;
 			}
+			return false;
 		}
 	}
 }

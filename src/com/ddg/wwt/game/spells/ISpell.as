@@ -6,6 +6,7 @@ package com.ddg.wwt.game.spells
 	 */
 	public interface ISpell 
 	{
+		function get Name():String;
 		function get ManaCost():Number;
 		function Match(orbSequence:Vector.<int>):Boolean;
 		function Cast(vector:Point):void;

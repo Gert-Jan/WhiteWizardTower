@@ -3,6 +3,7 @@ package com.ddg.wwt.game.drawing
 	import com.ddg.wwt.Assets;
 	import com.ddg.wwt.Settings;
 	import flash.geom.Point;
+	import starling.animation.Transitions;
 	import starling.animation.Tween;
 	import starling.core.Starling;
 	import starling.display.Image;
@@ -113,7 +114,7 @@ package com.ddg.wwt.game.drawing
 		private function DrawLine():void
 		{
 			var counter:int = 0;
-			drawPoints = new Vector.<Point>();
+			drawPoints.length = 0;
 			var x:Number, y:Number, factorX:Number, factorY:Number;
 			var deltaX:Number = Math.round(currentPos.x - previousPos.x);
 			var deltaY:Number = Math.round(currentPos.y - previousPos.y);
@@ -165,7 +166,7 @@ package com.ddg.wwt.game.drawing
 			
 			// fade out current draw image
 			fadingImages.push(drawImage);
-			var tween:Tween = new Tween(drawImage, 0.6, "linear");
+			var tween:Tween = new Tween(drawImage, 0.6, Transitions.LINEAR);
 			tween.fadeTo(0);
 			tween.onComplete = RemoveFadingImage;
 			Starling.juggler.add(tween);
@@ -175,6 +176,9 @@ package com.ddg.wwt.game.drawing
 			drawImage = new Image(drawTexture);
 			drawImage.alpha = 0.8;
 			surface.addChild(drawImage);
+			
+			// cleanup drawPoints
+			drawPoints.length = 0;;
 		}
 		
 		private function RemoveFadingImage():void

@@ -1,33 +1,80 @@
 package com.ddg.wwt.game.orbs 
 {
 	import com.ddg.wwt.Assets;
+	import flash.geom.Point;
+	import starling.animation.Transitions;
+	import starling.animation.Tween;
+	import starling.core.Starling;
 	import starling.display.Image;
 	import starling.display.Sprite;
 	/**
 	 * @author Gert-Jan Stolk
 	 */
-	public class Orb 
+	public class Orb extends Sprite
 	{
-		private var surface:Sprite = new Sprite();
+		private var index:int;
+		private var image:Image;
+		private var position:Point = new Point();
+		private var positionVariation:Point = new Point();
+		private var tween:Tween;
 		
-		public function Orb(name:String)
+		private static const X_VARIATION:Number = 40;
+		private static const Y_VARIATION:Number = 40;
+		private static const MIN_TIME:Number = 5;
+		private static const MAX_TIME:Number = 10;
+		
+		public function Orb(index:int)
 		{
-			var orb:Image = new Image(Assets.Instance.Orb);
-			orb.name = name;
-			orb.pivotX = orb.width / 2;
-			orb.pivotY = orb.height / 2;
-			surface.addChild(orb);
+			// art
+			this.index = index;
+			image = new Image(Assets.Instance.Orb);
+			image.pivotX = image.width / 2;
+			image.pivotY = image.height / 2;
+			this.addChild(image);
+			
+			// animation
+			tween = new Tween(positionVariation, 0, Transitions.EASE_OUT_IN);
+			RestartTween();
+			//tween.onComplete = RestartTween;
+			//Starling.juggler.add(tween);
 		}
 		
-		public function get Surface():Sprite
+		
+		public function get Index():int
 		{
-			return surface;
+			return index;
+		}
+		
+		public function set Scale(scale:Number):void
+		{
+			image.scaleX = scale;
+			image.scaleY = scale;
+		}
+		
+		public function get Scale():Number
+		{
+			return image.scaleX;
 		}
 		
 		public function SetPosition(x:Number, y:Number):void
 		{
-			surface.x = x;
-			surface.y = y;
+			position.x = x;
+			position.y = y;
+		}
+		
+		private function RestartTween():void
+		{
+			Starling.juggler.remove(tween);
+			tween.reset(positionVariation, Math.random() * (MAX_TIME - MIN_TIME) + MIN_TIME, Transitions.EASE_OUT_IN);
+			tween.onComplete = RestartTween;
+			tween.moveTo(Math.random() * X_VARIATION - X_VARIATION / 2, Math.random() * Y_VARIATION - Y_VARIATION / 2);
+			Starling.juggler.add(tween);
+		}
+		
+		public function Update(deltaTime:Number):void
+		{
+			image.x = position.x + positionVariation.x;
+			image.y = position.y + positionVariation.y;
 		}
 	}
 }

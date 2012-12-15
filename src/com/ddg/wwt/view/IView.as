@@ -9,6 +9,7 @@ package com.ddg.wwt.view
 	{
 		function Activate():void;
 		function Deactivate():void;
+		function Update(deltaTime:Number):void;
 		function get IsActive():Boolean;
 		function get Surface():Sprite;
 		function OnTouch(event:TouchEvent):Boolean;

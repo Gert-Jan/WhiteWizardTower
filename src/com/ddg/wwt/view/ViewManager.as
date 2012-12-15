@@ -32,6 +32,15 @@ package com.ddg.wwt.view
 			viewStack[0].Activate();
 		}
 		
+		public function Update(deltaTime:Number):void
+		{
+			for each (var view:IView in viewStack)
+			{
+				if (view.IsActive)
+					view.Update(deltaTime);
+			}
+		}
+		
 		public function get RootSurface():Sprite
 		{
 			return root;
