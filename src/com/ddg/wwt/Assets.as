@@ -1,5 +1,6 @@
 package com.ddg.wwt 
 {
+	import starling.extensions.PDParticleSystem;
 	import starling.textures.Texture;
 	
 	/**
@@ -17,16 +18,26 @@ package com.ddg.wwt
 		public function Assets() 
 		{}
 
-		[Embed(source = "../../../../art/Background.png")]
+		[Embed(source = "../../../../art/image/Background.png")]
 		private static const background:Class;
-		[Embed(source = "../../../../art/Ground.png")]
+		[Embed(source = "../../../../art/image/Ground.png")]
 		private static const ground:Class;
-		[Embed(source = "../../../../art/Tower.png")]
+		[Embed(source = "../../../../art/image/Tower.png")]
 		private static const tower:Class;
-		[Embed(source = "../../../../art/Orb.png")]
+		[Embed(source = "../../../../art/image/Orb.png")]
 		private static const orb:Class;
-		[Embed(source = "../../../../art/Brush.png")]
+		[Embed(source = "../../../../art/image/Brush.png")]
 		private static const brush:Class;
+		[Embed(source = "../../../../art/image/Spellbuffer.png")]
+		private static const spellbuffer:Class;
+		[Embed(source = "../../../../art/image/Managlow.png")]
+		private static const managlow:Class;
+		
+		[Embed(source = "../../../../art/particle/FireParticle.png")]
+        private static const FireParticle:Class;
+		
+		[Embed(source="../../../../art/particle/FireballSpell.pex", mimeType="application/octet-stream")]
+        private static const FireballSpell:Class;
 		
 		public function Init():void
 		{
@@ -35,6 +46,11 @@ package com.ddg.wwt
 		private function CreateTexture(asset:Class):Texture
 		{
 			return Texture.fromBitmap(new asset());
+		}
+		
+		private function CreateParticleSystem(config:Class, asset:Class):PDParticleSystem
+		{
+			return new PDParticleSystem(XML(new config()), CreateTexture(asset));
 		}
 		
 		public function get Background():Texture
@@ -57,9 +73,24 @@ package com.ddg.wwt
 			return CreateTexture(orb);
 		}
 		
+		public function get Spellbuffer():Texture
+		{
+			return CreateTexture(spellbuffer);
+		}
+		
+		public function get Managlow():Texture
+		{
+			return CreateTexture(managlow);
+		}
+		
 		public function get Brush():Texture
 		{
 			return CreateTexture(brush);
+		}
+		
+		public function get FireballParticle():PDParticleSystem
+		{
+			return CreateParticleSystem(FireballSpell, FireParticle);
 		}
 	}
 }
