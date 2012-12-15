@@ -33,6 +33,11 @@ package com.ddg.wwt
 		[Embed(source = "../../../../art/image/Managlow.png")]
 		private static const managlow:Class;
 		
+		[Embed(source = "../../../../art/image/IconEmpty.png")]
+		private static const iconEmpty:Class;
+		[Embed(source = "../../../../art/image/IconFireball.png")]
+		private static const iconFireball:Class;
+		
 		[Embed(source = "../../../../art/particle/FireParticle.png")]
         private static const FireParticle:Class;
 		
@@ -53,44 +58,17 @@ package com.ddg.wwt
 			return new PDParticleSystem(XML(new config()), CreateTexture(asset));
 		}
 		
-		public function get Background():Texture
-		{
-			return CreateTexture(background);
-		}
+		public function get Background():Texture { return CreateTexture(background); }
+		public function get Ground():Texture { return CreateTexture(ground); }
+		public function get Tower():Texture { return CreateTexture(tower); }
+		public function get Orb():Texture { return CreateTexture(orb); }
+		public function get Spellbuffer():Texture { return CreateTexture(spellbuffer); }
+		public function get Managlow():Texture { return CreateTexture(managlow); }
+		public function get Brush():Texture { return CreateTexture(brush); }
 		
-		public function get Ground():Texture
-		{
-			return CreateTexture(ground);
-		}
+		public function get IconEmpty():Texture { return CreateTexture(iconEmpty); }
+		public function get IconFireball():Texture { return CreateTexture(iconFireball); }
 		
-		public function get Tower():Texture
-		{
-			return CreateTexture(tower);
-		}
-		
-		public function get Orb():Texture
-		{
-			return CreateTexture(orb);
-		}
-		
-		public function get Spellbuffer():Texture
-		{
-			return CreateTexture(spellbuffer);
-		}
-		
-		public function get Managlow():Texture
-		{
-			return CreateTexture(managlow);
-		}
-		
-		public function get Brush():Texture
-		{
-			return CreateTexture(brush);
-		}
-		
-		public function get FireballParticle():PDParticleSystem
-		{
-			return CreateParticleSystem(FireballSpell, FireParticle);
-		}
+		public function get FireballParticle():PDParticleSystem { return CreateParticleSystem(FireballSpell, FireParticle); }
 	}
 }

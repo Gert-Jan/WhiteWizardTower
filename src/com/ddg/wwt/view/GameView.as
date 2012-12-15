@@ -57,6 +57,8 @@ package com.ddg.wwt.view
 			orbPad.Surface.y = Settings.Instance.StageHeight - tower.height + 20;
 			// buffer pad
 			bufferPad = new BufferPad();
+			bufferPad.Surface.x = Settings.Instance.StageWidth / 2;
+			bufferPad.Surface.y = Settings.Instance.StageHeight - 125;
 			// draw pad
 			drawPad = new DrawPad();
 			
@@ -64,6 +66,7 @@ package com.ddg.wwt.view
 			surface.addChild(manaPad.Surface);
 			surface.addChild(tower);
 			surface.addChild(ground);
+			surface.addChild(bufferPad.Surface);
 			surface.addChild(orbPad.Surface);
 			surface.addChild(drawPad.Surface);
 		}
@@ -115,7 +118,7 @@ package com.ddg.wwt.view
 			if (orbPad.HandleOrbTouches(drawPad.IsDrawing, drawPad.drawPoints))
 				drawState = DRAW_STATE_BUFFER;
 			if (!drawPad.IsDrawing && drawState == DRAW_STATE_CAST)
-				bufferPad.CastLastSpell(surface, drawPad.DrawPosition, drawPad.DrawVelocity);
+				bufferPad.CastSpell(surface, drawPad.DrawPosition, drawPad.DrawVelocity);
 			if (!drawPad.IsDrawing)
 				drawState = DRAW_STATE_NONE;
 			return false;
