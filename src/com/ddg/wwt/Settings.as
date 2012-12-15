@@ -2,6 +2,7 @@ package com.ddg.wwt
 {
 	import flash.display.Stage;
 	import starling.core.Starling;
+	import starling.display.Sprite;
 	/**
 	 * @author Gert-Jan Stolk
 	 */
@@ -19,12 +20,12 @@ package com.ddg.wwt
 		
 		private var starling:Starling = null;
 		
-		public function get stageWidth():Number
+		public function get StageWidth():Number
 		{
 			return Starling.current.stage.stageWidth;
 		}
 		
-		public function get stageHeight():Number
+		public function get StageHeight():Number
 		{
 			return Starling.current.stage.stageHeight;
 		}

@@ -25,6 +25,8 @@ package com.ddg.wwt
 		private static const tower:Class;
 		[Embed(source = "../../../../art/Orb.png")]
 		private static const orb:Class;
+		[Embed(source = "../../../../art/Brush.png")]
+		private static const brush:Class;
 		
 		public function Init():void
 		{
@@ -53,6 +55,11 @@ package com.ddg.wwt
 		public function get Orb():Texture
 		{
 			return CreateTexture(orb);
+		}
+		
+		public function get Brush():Texture
+		{
+			return CreateTexture(brush);
 		}
 	}
 }

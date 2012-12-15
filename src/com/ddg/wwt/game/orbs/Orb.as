@@ -1,4 +1,4 @@
-package com.ddg.wwt.game 
+package com.ddg.wwt.game.orbs 
 {
 	import com.ddg.wwt.Assets;
 	import starling.display.Image;
@@ -10,9 +10,10 @@ package com.ddg.wwt.game
 	{
 		private var surface:Sprite = new Sprite();
 		
-		public function Orb()
+		public function Orb(name:String)
 		{
 			var orb:Image = new Image(Assets.Instance.Orb);
+			orb.name = name;
 			orb.pivotX = orb.width / 2;
 			orb.pivotY = orb.height / 2;
 			surface.addChild(orb);
