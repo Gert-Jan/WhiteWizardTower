@@ -31,6 +31,11 @@ package com.ddg.wwt.game.drawing
 		private var currentPos:Point;
 		public var drawPoints:Vector.<Point> = new Vector.<Point>();
 		
+		private var drawStartPos:Point = new Point();
+		private var drawEndPos:Point = new Point();
+		private var drawStartTime:int = 0;
+		private var drawEndTime:int = 0;
+		
 		public function DrawPad() 
 		{
 			Init();
@@ -59,6 +64,22 @@ package com.ddg.wwt.game.drawing
 		public function get IsDrawing():Boolean
 		{
 			return isDrawing;
+		}
+		
+		public function get DrawPosition():Point
+		{
+			return drawStartPos;
+		}
+		
+		public function get DrawVelocity():Point
+		{
+			var drawTime:Number = DrawTime;
+			return new Point((drawEndPos.x - drawStartPos.x) / drawTime,(drawEndPos.y - drawStartPos.y) / drawTime);
+		}
+		
+		public function get DrawTime():Number
+		{
+			return Settings.Instance.GetTimeInSeconds(drawEndTime - drawStartTime);
 		}
 		
 		private function set BrushScale(scale:Number):void
@@ -102,6 +123,10 @@ package com.ddg.wwt.game.drawing
 			drawBrush.x = Math.round(currentPos.x);
 			drawBrush.y = Math.round(currentPos.y);
 			drawTexture.draw(drawBrush);
+			
+			// set start stats
+			drawStartPos = currentPos;
+			drawStartTime = Settings.Instance.GetCurrentTime();
 		}
 		
 		private function UpdateDrawing(touch:Touch):void
@@ -178,7 +203,11 @@ package com.ddg.wwt.game.drawing
 			surface.addChild(drawImage);
 			
 			// cleanup drawPoints
-			drawPoints.length = 0;;
+			drawPoints.length = 0;
+			
+			// set end stats
+			drawEndPos = currentPos;
+			drawEndTime = Settings.Instance.GetCurrentTime();
 		}
 		
 		private function RemoveFadingImage():void

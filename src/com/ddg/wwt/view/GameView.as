@@ -1,6 +1,8 @@
 package com.ddg.wwt.view 
 {
 	import com.ddg.wwt.Assets;
+	import com.ddg.wwt.game.actors.ActorManager;
+	import com.ddg.wwt.game.buffer.BufferPad;
 	import com.ddg.wwt.game.drawing.DrawPad;
 	import com.ddg.wwt.game.mana.ManaPad;
 	import com.ddg.wwt.game.orbs.OrbPad;
@@ -23,7 +25,13 @@ package com.ddg.wwt.view
 		
 		private var manaPad:ManaPad;
 		private var orbPad:OrbPad;
+		private var bufferPad:BufferPad;
 		private var drawPad:DrawPad;
+		
+		public static const DRAW_STATE_NONE:int = 0;
+		public static const DRAW_STATE_BUFFER:int = 1;
+		public static const DRAW_STATE_CAST:int = 2;
+		private var drawState:int = 0;
 		
 		public function GameView() 
 		{
@@ -47,6 +55,8 @@ package com.ddg.wwt.view
 			orbPad = new OrbPad(this);
 			orbPad.Surface.x = Settings.Instance.StageWidth / 2 - OrbPad.WIDTH / 2;
 			orbPad.Surface.y = Settings.Instance.StageHeight - tower.height + 20;
+			// buffer pad
+			bufferPad = new BufferPad();
 			// draw pad
 			drawPad = new DrawPad();
 			
@@ -79,6 +89,7 @@ package com.ddg.wwt.view
 		public function Update(deltaTime:Number):void
 		{
 			orbPad.Update(deltaTime);
+			ActorManager.Instance.Update(deltaTime);
 		}
 		
 		public function get IsActive():Boolean
@@ -91,10 +102,22 @@ package com.ddg.wwt.view
 			return surface;
 		}
 		
+		public function get SpellBuffer():BufferPad
+		{
+			return bufferPad;
+		}
+		
 		public function OnTouch(event:TouchEvent):Boolean
 		{
 			drawPad.OnTouch(event);
-			orbPad.HandleOrbTouches(drawPad.IsDrawing, drawPad.drawPoints);
+			if (drawPad.IsDrawing && drawState == DRAW_STATE_NONE)
+				drawState = DRAW_STATE_CAST;
+			if (orbPad.HandleOrbTouches(drawPad.IsDrawing, drawPad.drawPoints))
+				drawState = DRAW_STATE_BUFFER;
+			if (!drawPad.IsDrawing && drawState == DRAW_STATE_CAST)
+				bufferPad.CastLastSpell(surface, drawPad.DrawPosition, drawPad.DrawVelocity);
+			if (!drawPad.IsDrawing)
+				drawState = DRAW_STATE_NONE;
 			return false;
 		}
 	}

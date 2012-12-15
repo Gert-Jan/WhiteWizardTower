@@ -29,6 +29,8 @@ package com.ddg.wwt.game.orbs
 		private var orbs:Vector.<Orb> = new Vector.<Orb>();
 		private var sequence:Vector.<int> = new Vector.<int>();
 		
+		private var lastSpell:ISpell = null;
+		
 		public function OrbPad(gameView:GameView)
 		{
 			this.gameView = gameView;
@@ -68,7 +70,12 @@ package com.ddg.wwt.game.orbs
 			surface.addChild(orb);
 		}
 		
-		public function HandleOrbTouches(isDrawing:Boolean, points:Vector.<Point>):void
+		public function get SequenceLength():int
+		{
+			return sequence.length;
+		}
+		
+		public function HandleOrbTouches(isDrawing:Boolean, points:Vector.<Point>):Boolean
 		{
 			var orb:Orb;
 			if (isDrawing)
@@ -85,20 +92,27 @@ package com.ddg.wwt.game.orbs
 							sequence.push(orb.Index);
 							orb.Scale = Math.min(orb.Scale + SCALE_STEP, MAX_SCALE);
 							var spell:ISpell = SpellBook.Instance.GetSpell(sequence);
-							if (spell != null)
+							if (spell != null && spell != lastSpell)
+							{
 								trace(spell.Name);
+								gameView.SpellBuffer.BufferSpell(spell);
+								lastSpell = spell;
+							}
 						}
+						return true;
 					}
 				}
 			}
 			else if (sequence.length > 0)
 			{
 				sequence.length = 0;
+				lastSpell = null;
 				for each (orb in orbs)
 				{
 					orb.Scale = DEFAULT_SCALE;
 				}
 			}
+			return false;
 		}
 	}
 }

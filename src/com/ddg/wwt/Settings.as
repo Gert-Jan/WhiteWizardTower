@@ -1,6 +1,7 @@
 package com.ddg.wwt 
 {
 	import flash.display.Stage;
+	import flash.utils.getTimer;
 	import starling.core.Starling;
 	import starling.display.Sprite;
 	/**
@@ -28,6 +29,21 @@ package com.ddg.wwt
 		public function get StageHeight():Number
 		{
 			return Starling.current.stage.stageHeight;
+		}
+		
+		public function GetCurrentTime():int
+		{
+			return getTimer();
+		}
+		
+		public function GetTimeInSeconds(time:int):Number
+		{
+			return time * 0.001;
+		}
+		
+		public function get GroundY():Number
+		{
+			return StageHeight - 50;
 		}
 	}
 }

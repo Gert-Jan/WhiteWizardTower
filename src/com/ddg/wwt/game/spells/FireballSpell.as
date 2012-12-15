@@ -1,12 +1,15 @@
 package com.ddg.wwt.game.spells 
 {
+	import com.ddg.wwt.game.actors.ActorManager;
+	import com.ddg.wwt.game.actors.Fireball;
 	import flash.geom.Point;
+	import starling.display.DisplayObjectContainer;
 	/**
 	 * @author Gert-Jan Stolk
 	 */
 	public class FireballSpell implements ISpell 
 	{
-		private static const spellSequence:Vector.<int> = Vector.<int>([3, 1, 4, 7, 5, 2, 4]);
+		private static const spellSequence:Vector.<int> = Vector.<int>([3, 4, 7, 5, 2, 4]);
 		
 		public function FireballSpell() 
 		{
@@ -28,9 +31,10 @@ package com.ddg.wwt.game.spells
 			return SpellBook.ExactSequentialMatch(orbSequence, spellSequence);
 		}
 		
-		public function Cast(vector:Point):void 
+		public function Cast(target:DisplayObjectContainer, position:Point, vector:Point):void 
 		{
-			
+			var projectile:Fireball = new Fireball(target, position, vector);
+			ActorManager.Instance.AddProjectile(projectile);
 		}
 	}
 }

@@ -2,7 +2,7 @@
 <particleEmitterConfig>
   <texture name="FireParticle.png"/>
   <sourcePosition x="0" y="0"/>
-  <sourcePositionVariance x="20" y="0.00"/>
+  <sourcePositionVariance x="10" y="0.00"/>
   <speed value="90.00"/>
   <speedVariance value="30.00"/>
   <particleLifeSpan value="1.0000"/>
@@ -20,7 +20,7 @@
   <finishColorVariance red="0.00" green="0.00" blue="0.00" alpha="0.00"/>
   <maxParticles value="50"/>
   <startParticleSize value="70.00"/>
-  <startParticleSizeVariance value="49.53"/>
+  <startParticleSizeVariance value="20"/>
   <finishParticleSize value="10.00"/>
   <FinishParticleSizeVariance value="0.00"/>
   <duration value="-1.00"/>
