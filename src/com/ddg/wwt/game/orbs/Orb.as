@@ -13,6 +13,7 @@ package com.ddg.wwt.game.orbs
 	public class Orb extends Sprite
 	{
 		private var index:int;
+		private var baseScale:Number;
 		private var image:Image;
 		private var position:Point = new Point();
 		private var positionVariation:Point = new Point();
@@ -23,10 +24,11 @@ package com.ddg.wwt.game.orbs
 		private static const MIN_TIME:Number = 5;
 		private static const MAX_TIME:Number = 10;
 		
-		public function Orb(index:int)
+		public function Orb(index:int, baseScale:Number)
 		{
 			// art
 			this.index = index;
+			this.baseScale = baseScale;
 			image = new Image(Assets.Instance.Orb);
 			image.pivotX = image.width / 2;
 			image.pivotY = image.height / 2;
@@ -35,8 +37,6 @@ package com.ddg.wwt.game.orbs
 			// animation
 			tween = new Tween(positionVariation, 0, Transitions.EASE_OUT_IN);
 			RestartTween();
-			//tween.onComplete = RestartTween;
-			//Starling.juggler.add(tween);
 		}
 		
 		
@@ -47,13 +47,13 @@ package com.ddg.wwt.game.orbs
 		
 		public function set Scale(scale:Number):void
 		{
-			image.scaleX = scale;
-			image.scaleY = scale;
+			image.scaleX = baseScale * scale;
+			image.scaleY = baseScale * scale;
 		}
 		
 		public function get Scale():Number
 		{
-			return image.scaleX;
+			return image.scaleX / baseScale;
 		}
 		
 		public function SetPosition(x:Number, y:Number):void
@@ -67,7 +67,7 @@ package com.ddg.wwt.game.orbs
 			Starling.juggler.remove(tween);
 			tween.reset(positionVariation, Math.random() * (MAX_TIME - MIN_TIME) + MIN_TIME, Transitions.EASE_OUT_IN);
 			tween.onComplete = RestartTween;
-			tween.moveTo(Math.random() * X_VARIATION - X_VARIATION / 2, Math.random() * Y_VARIATION - Y_VARIATION / 2);
+			tween.moveTo(Math.random() * X_VARIATION * baseScale - X_VARIATION * baseScale / 2, Math.random() * Y_VARIATION * baseScale - Y_VARIATION * baseScale / 2);
 			Starling.juggler.add(tween);
 		}
 		

@@ -44,15 +44,15 @@ package com.ddg.wwt.game.orbs
 		
 		private function InitOrbs():void
 		{
-			AddOrb(0, X + WIDTH / 4 * 2, Y + HEIGHT / 4 * 0);
-			AddOrb(1, X + WIDTH / 4 * 1, Y + HEIGHT / 4 * 1);
-			AddOrb(2, X + WIDTH / 4 * 3, Y + HEIGHT / 4 * 1);
-			AddOrb(3, X + WIDTH / 4 * 0, Y + HEIGHT / 4 * 2);
-			AddOrb(4, X + WIDTH / 4 * 2, Y + HEIGHT / 4 * 2);
-			AddOrb(5, X + WIDTH / 4 * 4, Y + HEIGHT / 4 * 2);
-			AddOrb(6, X + WIDTH / 4 * 1, Y + HEIGHT / 4 * 3);
-			AddOrb(7, X + WIDTH / 4 * 3, Y + HEIGHT / 4 * 3);
-			AddOrb(8, X + WIDTH / 4 * 2, Y + HEIGHT / 4 * 4);
+			AddOrb(0, X + WIDTH / 4 * 2, Y + HEIGHT / 4 * 0.2, 0.8);
+			AddOrb(1, X + WIDTH / 4 * 1.1, Y + HEIGHT / 4 * 1.1, 0.9);
+			AddOrb(2, X + WIDTH / 4 * 2.9, Y + HEIGHT / 4 * 1.1, 0.9);
+			AddOrb(3, X + WIDTH / 4 * 0.2, Y + HEIGHT / 4 * 2, 0.8);
+			AddOrb(4, X + WIDTH / 4 * 2, Y + HEIGHT / 4 * 2, 1.0);
+			AddOrb(5, X + WIDTH / 4 * 3.8, Y + HEIGHT / 4 * 2, 0.8);
+			AddOrb(6, X + WIDTH / 4 * 1.1, Y + HEIGHT / 4 * 2.9, 0.9);
+			AddOrb(7, X + WIDTH / 4 * 2.9, Y + HEIGHT / 4 * 2.9, 0.9);
+			AddOrb(8, X + WIDTH / 4 * 2, Y + HEIGHT / 4 * 3.8, 0.8);
 		}
 		
 		public function Update(deltaTime:Number):void
@@ -61,9 +61,9 @@ package com.ddg.wwt.game.orbs
 				orb.Update(deltaTime);
 		}
 		
-		private function AddOrb(index:int, x:Number, y:Number):void
+		private function AddOrb(index:int, x:Number, y:Number, baseScale:Number):void
 		{
-			var orb:Orb = new Orb(index);
+			var orb:Orb = new Orb(index, baseScale);
 			orb.SetPosition(x, y);
 			orb.Scale = DEFAULT_SCALE;
 			orbs.push(orb);

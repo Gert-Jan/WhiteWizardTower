@@ -2,7 +2,7 @@ package com.ddg.wwt.game.spells
 {
 	import com.ddg.wwt.Assets;
 	import com.ddg.wwt.game.actors.ActorManager;
-	import com.ddg.wwt.game.actors.Fireball;
+	import com.ddg.wwt.game.actors.projectiles.Fireball;
 	import flash.geom.Point;
 	import starling.display.DisplayObjectContainer;
 	import starling.textures.Texture;

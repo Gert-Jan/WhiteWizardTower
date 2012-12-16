@@ -19,7 +19,8 @@ package com.ddg.wwt
 		public function Settings() 
 		{}
 		
-		private var starling:Starling = null;
+		public static const DIRECTION_LEFT:int = -1;
+		public static const DIRECTION_RIGHT:int = 1;
 		
 		public function get StageWidth():Number
 		{
@@ -44,6 +45,26 @@ package com.ddg.wwt
 		public function get GroundY():Number
 		{
 			return StageHeight - 50;
+		}
+		
+		public function get TowerLeft():Number
+		{
+			return StageWidth / 2 - 50;
+		}
+		
+		public function get TowerRight():Number
+		{
+			return StageWidth / 2 + 50;
+		}
+		
+		public function get ScreenLeft():Number
+		{
+			return 0;
+		}
+		
+		public function get ScreenRight():Number
+		{
+			return StageWidth;
 		}
 	}
 }

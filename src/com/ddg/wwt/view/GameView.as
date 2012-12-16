@@ -2,19 +2,17 @@ package com.ddg.wwt.view
 {
 	import com.ddg.wwt.Assets;
 	import com.ddg.wwt.game.actors.ActorManager;
+	import com.ddg.wwt.game.actors.mobs.Orc;
 	import com.ddg.wwt.game.buffer.BufferPad;
 	import com.ddg.wwt.game.drawing.DrawPad;
 	import com.ddg.wwt.game.mana.ManaPad;
 	import com.ddg.wwt.game.orbs.OrbPad;
+	import com.ddg.wwt.game.spells.FireballSpell;
 	import com.ddg.wwt.Settings;
-	import flash.events.IMEEvent;
 	import flash.geom.Point;
 	import starling.display.Image;
 	import starling.display.Sprite;
-	import starling.events.Touch;
 	import starling.events.TouchEvent;
-	import starling.events.TouchPhase;
-	import starling.textures.RenderTexture;
 	/**
 	 * @author Gert-Jan Stolk
 	 */
@@ -36,6 +34,7 @@ package com.ddg.wwt.view
 		public function GameView() 
 		{
 			Init();
+			InitTest();
 		}
 		
 		private function Init():void
@@ -69,6 +68,15 @@ package com.ddg.wwt.view
 			surface.addChild(bufferPad.Surface);
 			surface.addChild(orbPad.Surface);
 			surface.addChild(drawPad.Surface);
+		}
+		
+		private function InitTest():void
+		{
+			bufferPad.BufferSpell(new FireballSpell());
+			bufferPad.BufferSpell(new FireballSpell());
+			bufferPad.BufferSpell(new FireballSpell());
+			for (var i:int = 0; i < 100; i++)
+				ActorManager.Instance.AddMob(new Orc(surface, new Point(Math.random() * 800, Math.random() * 480), Math.random() < 0.5 ? Settings.DIRECTION_LEFT : Settings.DIRECTION_RIGHT));
 		}
 		
 		public function Activate():void

@@ -32,5 +32,22 @@ package com.ddg.wwt.game.actors
 			projectiles.push(projectile);
 			projectile.Init();
 		}
+		public function DestroyProjectile(projectile:IActor):void
+		{
+			projectile.Destroy();
+			projectiles.splice(projectiles.indexOf(projectile), 1);
+		}
+		
+		public function AddMob(mob:IActor):void
+		{
+			mobs.push(mob);
+			mob.Init();
+		}
+		
+		public function RemoveMob(mob:IActor):void
+		{
+			mob.Destroy();
+			mobs.splice(mobs.indexOf(mob), 1);
+		}
 	}
 }
