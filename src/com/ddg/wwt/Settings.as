@@ -1,5 +1,6 @@
 package com.ddg.wwt 
 {
+	import com.ddg.wwt.game.actors.mobs.Wizard;
 	import flash.display.Stage;
 	import flash.utils.getTimer;
 	import starling.core.Starling;
@@ -21,6 +22,8 @@ package com.ddg.wwt
 		
 		public static const DIRECTION_LEFT:int = -1;
 		public static const DIRECTION_RIGHT:int = 1;
+		public var wizard:Wizard;
+		public var score:int = 0;
 		
 		public function get StageWidth():Number
 		{
@@ -44,17 +47,17 @@ package com.ddg.wwt
 		
 		public function get GroundY():Number
 		{
-			return StageHeight - 50;
+			return StageHeight - 15;
 		}
 		
 		public function get TowerLeft():Number
 		{
-			return StageWidth / 2 - 50;
+			return StageWidth / 2 - 20;
 		}
 		
 		public function get TowerRight():Number
 		{
-			return StageWidth / 2 + 50;
+			return StageWidth / 2 + 20;
 		}
 		
 		public function get ScreenLeft():Number

@@ -18,6 +18,7 @@ package com.ddg.wwt.game.actors
 		function get DrawTarget():DisplayObjectContainer;
 		
 		function get Health():Number;
+		function get Heat():Number;
 		function ApplyHeat(heat:Number, duration:Number):void;
 	}
 }

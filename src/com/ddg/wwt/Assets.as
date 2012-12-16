@@ -36,6 +36,10 @@ package com.ddg.wwt
 		private static const spellbuffer:Class;
 		[Embed(source = "../../../../art/image/Managlow.png")]
 		private static const managlow:Class;
+		[Embed(source = "../../../../art/image/Healthbar.png")]
+		private static const healthbar:Class;
+		[Embed(source = "../../../../art/image/Wizard.png")]
+		private static const wizard:Class;
 		
 		// icons
 		[Embed(source = "../../../../art/image/IconEmpty.png")]
@@ -93,6 +97,8 @@ package com.ddg.wwt
 		public function get Spellbuffer():Texture { return CreateTexture(spellbuffer); }
 		public function get Managlow():Texture { return CreateTexture(managlow); }
 		public function get Brush():Texture { return CreateTexture(brush); }
+		public function get Healthbar():Texture { return CreateTexture(healthbar); }
+		public function get Wizard():Texture { return CreateTexture(wizard); }
 		
 		// icons
 		public function get IconEmpty():Texture { return CreateTexture(iconEmpty); }

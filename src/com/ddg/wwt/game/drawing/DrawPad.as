@@ -18,6 +18,7 @@ package com.ddg.wwt.game.drawing
 	public class DrawPad 
 	{
 		private static const DEFAULT_BRUSH_SCALE:Number = 0.5;
+		private static const DEFAULT_COLOR:uint = 0x336DFF;
 		private var surface:Sprite;
 		
 		private var fadingImages:Vector.<Image> = new Vector.<Image>();
@@ -47,6 +48,8 @@ package com.ddg.wwt.game.drawing
 			surface = new Sprite();
 			drawTexture = new RenderTexture(Settings.Instance.StageWidth, Settings.Instance.StageHeight);
 			drawImage = new Image(drawTexture);
+			drawImage.alpha = 0.8;
+			drawImage.color = DEFAULT_COLOR;
 			surface.addChild(drawImage);
 			
 			// init brush
@@ -86,6 +89,11 @@ package com.ddg.wwt.game.drawing
 		{
 			drawBrush.scaleX = scale;
 			drawBrush.scaleY = scale;
+		}
+		
+		public function set Color(color:uint):void
+		{
+			drawImage.color = color;
 		}
 		
 		public function OnTouch(event:TouchEvent):Boolean
@@ -200,6 +208,7 @@ package com.ddg.wwt.game.drawing
 			drawTexture = new RenderTexture(Settings.Instance.StageWidth, Settings.Instance.StageHeight);
 			drawImage = new Image(drawTexture);
 			drawImage.alpha = 0.8;
+			drawImage.color = DEFAULT_COLOR;
 			surface.addChild(drawImage);
 			
 			// cleanup drawPoints

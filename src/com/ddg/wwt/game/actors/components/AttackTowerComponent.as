@@ -26,8 +26,8 @@ package com.ddg.wwt.game.actors.components
 			if ((vel.x > 0 && pos.x > SETTINGS.TowerLeft) ||
 				(vel.x < 0 && pos.x < SETTINGS.TowerRight))
 			{
-				// TODO: damage tower
-				ActorManager.Instance.RemoveMob(actor);
+				SETTINGS.wizard.DecreaseHealth(actor.Health / 10);
+				ActorManager.Instance.DestroyMob(actor);
 			}
 		}
 		

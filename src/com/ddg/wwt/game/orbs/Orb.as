@@ -56,6 +56,16 @@ package com.ddg.wwt.game.orbs
 			return image.scaleX / baseScale;
 		}
 		
+		public function set Color(color:uint):void
+		{
+			image.color = color;
+		}
+		
+		public function get Color():uint
+		{
+			return image.color;
+		}
+		
 		public function SetPosition(x:Number, y:Number):void
 		{
 			position.x = x;

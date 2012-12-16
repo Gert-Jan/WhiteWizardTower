@@ -50,6 +50,11 @@ package com.ddg.wwt.game.actors.components
 			return heat;
 		}
 		
+		public function set Heat(heat:Number):void
+		{
+			this.heat = heat;
+		}
+		
 		public function get IsDestroyed():Boolean
 		{
 			return destroyed;
@@ -59,8 +64,8 @@ package com.ddg.wwt.game.actors.components
 		{
 			var pos:Point = actor.Position;
 			flames = Assets.Instance.FireballParticle;
-			flames.emitterX = pos.x;
-			flames.emitterY = pos.y;
+			flames.emitterX = pos.x + flamesOffset.x;
+			flames.emitterY = pos.y + flamesOffset.y;
 			flames.start();
 			if (heat > 0)
 				ActivateFlames();
@@ -74,8 +79,8 @@ package com.ddg.wwt.game.actors.components
 		{
 			// position particles
 			var pos:Point = actor.Position;
-			flames.emitterX = pos.x;
-			flames.emitterY = pos.y;
+			flames.emitterX = pos.x + flamesOffset.x;
+			flames.emitterY = pos.y + flamesOffset.y;
 			
 			// set new heat based on heatRate, activate/deactivate particles
 			heat += heatRate * deltaTime;

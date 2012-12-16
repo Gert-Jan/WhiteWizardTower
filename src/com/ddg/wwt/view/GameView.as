@@ -3,6 +3,7 @@ package com.ddg.wwt.view
 	import com.ddg.wwt.Assets;
 	import com.ddg.wwt.game.actors.ActorManager;
 	import com.ddg.wwt.game.actors.mobs.Orc;
+	import com.ddg.wwt.game.actors.mobs.Wizard;
 	import com.ddg.wwt.game.buffer.BufferPad;
 	import com.ddg.wwt.game.drawing.DrawPad;
 	import com.ddg.wwt.game.mana.ManaPad;
@@ -13,6 +14,9 @@ package com.ddg.wwt.view
 	import starling.display.Image;
 	import starling.display.Sprite;
 	import starling.events.TouchEvent;
+	import starling.text.TextField;
+	import starling.utils.HAlign;
+	import starling.utils.VAlign;
 	/**
 	 * @author Gert-Jan Stolk
 	 */
@@ -31,8 +35,16 @@ package com.ddg.wwt.view
 		public static const DRAW_STATE_CAST:int = 2;
 		private var drawState:int = 0;
 		
+		// monster spawning
+		private var startTime:int;
+		private var lastSpawnTime:int;
+		
+		//ui
+		private var scoreField:TextField;
+		
 		public function GameView() 
 		{
+			startTime = Settings.Instance.GetCurrentTime();
 			Init();
 			InitTest();
 		}
@@ -41,8 +53,11 @@ package com.ddg.wwt.view
 		{
 			// decoration
 			var background:Image = new Image(Assets.Instance.Background);
+			background.height = Settings.Instance.StageHeight;
+			background.width = Settings.Instance.StageWidth;
 			var ground:Image = new Image(Assets.Instance.Ground);
 			ground.y = Settings.Instance.StageHeight - 50;
+			ground.width = Settings.Instance.StageWidth;
 			var tower:Image = new Image(Assets.Instance.Tower);
 			tower.x = (Settings.Instance.StageWidth - tower.width) / 2;
 			tower.y = (Settings.Instance.StageHeight - tower.height);
@@ -63,20 +78,28 @@ package com.ddg.wwt.view
 			
 			surface.addChild(background);
 			surface.addChild(manaPad.Surface);
-			surface.addChild(tower);
 			surface.addChild(ground);
+			surface.addChild(tower);
 			surface.addChild(bufferPad.Surface);
 			surface.addChild(orbPad.Surface);
 			surface.addChild(drawPad.Surface);
+			
+			// ui
+			scoreField = new TextField(Settings.Instance.StageWidth - 10, 30, "0", "Verdana", 14, 0xffffff, false);
+			scoreField.hAlign = HAlign.RIGHT;
+			scoreField.vAlign = VAlign.BOTTOM;
+			surface.addChild(scoreField);
 		}
 		
 		private function InitTest():void
 		{
+			Settings.Instance.wizard = new Wizard(surface);
+			ActorManager.Instance.AddMob(Settings.Instance.wizard);
 			bufferPad.BufferSpell(new FireballSpell());
 			bufferPad.BufferSpell(new FireballSpell());
 			bufferPad.BufferSpell(new FireballSpell());
-			for (var i:int = 0; i < 100; i++)
-				ActorManager.Instance.AddMob(new Orc(surface, new Point(Math.random() * 800, Math.random() * 480), Math.random() < 0.5 ? Settings.DIRECTION_LEFT : Settings.DIRECTION_RIGHT));
+			ActorManager.Instance.AddMob(new Orc(surface, new Point(100, 0), Settings.DIRECTION_RIGHT));
+			ActorManager.Instance.AddMob(new Orc(surface, new Point(800, 0), Settings.DIRECTION_LEFT));
 		}
 		
 		public function Activate():void
@@ -99,8 +122,41 @@ package com.ddg.wwt.view
 		
 		public function Update(deltaTime:Number):void
 		{
-			orbPad.Update(deltaTime);
-			ActorManager.Instance.Update(deltaTime);
+			if (!Settings.Instance.wizard.IsDead)
+			{
+				orbPad.Update(deltaTime);
+				ActorManager.Instance.Update(deltaTime);
+				SpawnMobs(deltaTime);
+				RefillMana(deltaTime);
+				UpdateUI();
+			}
+		}
+		
+		private function SpawnMobs(deltaTime:Number):void
+		{
+			var timeInGame:int = Math.round((Settings.Instance.GetCurrentTime() - startTime) * 0.001);
+			if (timeInGame % 8 == 0 && timeInGame != lastSpawnTime)
+			{
+				lastSpawnTime = timeInGame;
+				for (var i:int = 0; i < Math.min(timeInGame / 10, 10); i++)
+					ActorManager.Instance.AddMob(new Orc(surface, new Point(0 - i * 5 - 10, Settings.Instance.GroundY), Settings.DIRECTION_RIGHT));
+			}
+			if ((timeInGame + 4) % 8 == 0 && timeInGame != lastSpawnTime)
+			{
+				lastSpawnTime = timeInGame;
+				for (var j:int = 0; j < Math.min(10, timeInGame / 10); j++)
+					ActorManager.Instance.AddMob(new Orc(surface, new Point(Settings.Instance.StageWidth + j * 5 + 10, Settings.Instance.GroundY), Settings.DIRECTION_LEFT));
+			}
+		}
+		
+		private function RefillMana(deltaTime:Number):void
+		{
+			manaPad.Mana = Math.min(1, manaPad.Mana + deltaTime * 0.02);
+		}
+		
+		private function UpdateUI():void
+		{
+			scoreField.text = String(Settings.Instance.score);
 		}
 		
 		public function get IsActive():Boolean
@@ -123,17 +179,25 @@ package com.ddg.wwt.view
 			return manaPad;
 		}
 		
+		public function get DrawSurface():DrawPad
+		{
+			return drawPad;
+		}
+		
 		public function OnTouch(event:TouchEvent):Boolean
 		{
-			drawPad.OnTouch(event);
-			if (drawPad.IsDrawing && drawState == DRAW_STATE_NONE)
-				drawState = DRAW_STATE_CAST;
-			if (orbPad.HandleOrbTouches(drawPad.IsDrawing, drawPad.drawPoints))
-				drawState = DRAW_STATE_BUFFER;
-			if (!drawPad.IsDrawing && drawState == DRAW_STATE_CAST)
-				bufferPad.CastSpell(surface, drawPad.DrawPosition, drawPad.DrawVelocity);
-			if (!drawPad.IsDrawing)
-				drawState = DRAW_STATE_NONE;
+			if (!Settings.Instance.wizard.IsDead)
+			{
+				drawPad.OnTouch(event);
+				if (drawPad.IsDrawing && drawState == DRAW_STATE_NONE)
+					drawState = DRAW_STATE_CAST;
+				if (orbPad.HandleOrbTouches(drawPad.IsDrawing, drawPad.drawPoints))
+					drawState = DRAW_STATE_BUFFER;
+				if (!drawPad.IsDrawing && drawState == DRAW_STATE_CAST)
+					bufferPad.CastSpell(surface, drawPad.DrawPosition, drawPad.DrawVelocity);
+				if (!drawPad.IsDrawing)
+					drawState = DRAW_STATE_NONE;
+			}
 			return false;
 		}
 	}

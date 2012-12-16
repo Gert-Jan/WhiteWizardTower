@@ -22,6 +22,11 @@ package com.ddg.wwt.game.actors.components
 			this.acceleration = acceleration;
 			this.deceleration = deceleration;
 		}
+		
+		public function set MaxWalkSpeed(speed:Number):void
+		{
+			this.maxWalkSpeed = speed;
+		}
 
 		public function Init():void 
 		{}

@@ -1,5 +1,6 @@
 package com.ddg.wwt.game.actors 
 {
+	import flash.geom.Point;
 	/**
 	 * @author Gert-Jan Stolk
 	 */
@@ -44,10 +45,26 @@ package com.ddg.wwt.game.actors
 			mob.Init();
 		}
 		
-		public function RemoveMob(mob:IActor):void
+		public function DestroyMob(mob:IActor):void
 		{
 			mob.Destroy();
 			mobs.splice(mobs.indexOf(mob), 1);
+		}
+		
+		public function FindMobsInCircle(point:Point, radius:Number):Vector.<IActor>
+		{
+			var result:Vector.<IActor> = new Vector.<IActor>();
+			var delta:Point = new Point();
+			var mobPos:Point = new Point();
+			for each (var mob:IActor in mobs)
+			{
+				mobPos = mob.Position;
+				delta.x = point.x - mobPos.x;
+				delta.y = point.y - mobPos.y;
+				if (delta.length < radius)
+					result.push(mob);
+			}
+			return result;
 		}
 	}
 }

@@ -19,7 +19,7 @@ package com.ddg.wwt
 			stage.align = StageAlign.TOP_LEFT;
 			Assets.Instance.Init();
 			starling = new Starling(Game, stage);
-			starling.showStats = true;
+			//starling.showStats = true;
 			starling.start();
 		}
 	}

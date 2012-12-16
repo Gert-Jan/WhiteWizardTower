@@ -19,9 +19,9 @@ package com.ddg.wwt.game.buffer
 		
 		private function Init():void
 		{
-			bufferSlots[0] = new BufferSlot(-50, 0.95);
-			bufferSlots[1] = new BufferSlot(0, 1);
-			bufferSlots[2] = new BufferSlot(50, 0.95);
+			bufferSlots[0] = new BufferSlot(-50, 5, 0.95);
+			bufferSlots[1] = new BufferSlot(0, 8, 1);
+			bufferSlots[2] = new BufferSlot(50, 5, 0.95);
 			for each (var slot:BufferSlot in bufferSlots)
 				surface.addChild(slot.Surface);
 		}

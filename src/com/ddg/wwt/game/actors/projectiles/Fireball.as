@@ -3,6 +3,7 @@ package com.ddg.wwt.game.actors.projectiles
 	import com.ddg.wwt.Assets;
 	import com.ddg.wwt.game.actors.ActorManager;
 	import com.ddg.wwt.game.actors.components.ApplyHeatComponent;
+	import com.ddg.wwt.game.actors.components.DamageRadiateHeatComponent;
 	import com.ddg.wwt.game.actors.components.MovementSkyfallComponent;
 	import com.ddg.wwt.game.actors.IActor;
 	import com.ddg.wwt.Settings;
@@ -22,7 +23,8 @@ package com.ddg.wwt.game.actors.projectiles
 		private static const MAX_Y_VEL:Number = 400;
 		
 		// heat
-		private static const EXTINGUISH_TIME:Number = 2.0;
+		private static const HEAT_RADIUS: Number = 20;
+		private static const EXTINGUISH_TIME:Number = 5.0;
 		
 		// components
 		private var heatComponent:ApplyHeatComponent;
@@ -41,6 +43,7 @@ package com.ddg.wwt.game.actors.projectiles
 			componentManager.AddComponent(fallComponent);
 			heatComponent = new ApplyHeatComponent(1.0);
 			componentManager.AddComponent(heatComponent);
+			componentManager.AddComponent(new DamageRadiateHeatComponent(HEAT_RADIUS));
 		}
 		
 		public override function Update(deltaTime:Number):void 
@@ -54,6 +57,11 @@ package com.ddg.wwt.game.actors.projectiles
 			
 			if (heatComponent.IsDestroyed)
 				ActorManager.Instance.DestroyProjectile(this);
+		}
+		
+		public override function get Heat():Number
+		{
+			return heatComponent.Heat;
 		}
 		
 		public override function ApplyHeat(heat:Number, duration:Number):void

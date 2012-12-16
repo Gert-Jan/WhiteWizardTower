@@ -75,6 +75,11 @@ package com.ddg.wwt.game.actors.projectiles
 			return 100;
 		}
 		
+		public function get Heat():Number
+		{
+			return 0;
+		}
+		
 		public function ApplyHeat(heat:Number, duration:Number):void
 		{
 		}

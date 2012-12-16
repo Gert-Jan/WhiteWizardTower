@@ -15,9 +15,10 @@ package com.ddg.wwt.game.buffer
 		private var icon:Image;
 		private var spell:ISpell;
 		
-		public function BufferSlot(x:Number, alpha:Number) 
+		public function BufferSlot(x:Number, y:Number, alpha:Number) 
 		{
 			surface.x = x;
+			surface.y = y;
 			
 			background = new Image(Assets.Instance.Spellbuffer);
 			background.pivotX = background.width / 2;

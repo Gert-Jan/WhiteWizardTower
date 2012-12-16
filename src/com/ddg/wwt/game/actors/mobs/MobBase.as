@@ -78,6 +78,11 @@ package com.ddg.wwt.game.actors.mobs
 			return health;
 		}
 		
+		public function get Heat():Number
+		{
+			return 0;
+		}
+		
 		public function ApplyHeat(heat:Number, duration:Number):void
 		{
 		}

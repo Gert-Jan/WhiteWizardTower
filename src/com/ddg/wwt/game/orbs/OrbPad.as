@@ -90,7 +90,9 @@ package com.ddg.wwt.game.orbs
 							sequence.length > 0 && sequence[sequence.length - 1] != orb.Index)
 						{
 							sequence.push(orb.Index);
+							gameView.DrawSurface.Color = 0xffffbb;
 							orb.Scale = Math.min(orb.Scale + SCALE_STEP, MAX_SCALE);
+							orb.Color = orb.Color - 50;
 							var spell:ISpell = SpellBook.Instance.GetSpell(sequence);
 							if (spell != null && spell != lastSpell)
 							{
@@ -118,6 +120,7 @@ package com.ddg.wwt.game.orbs
 				for each (orb in orbs)
 				{
 					orb.Scale = DEFAULT_SCALE;
+					orb.Color = 0xffffff;
 				}
 			}
 			return false;
