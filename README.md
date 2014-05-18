@@ -1,4 +1,4 @@
 WhiteWizardTower
 ================
 
-Lundum Dare 25 entry
+Ludum Dare 25 entry
